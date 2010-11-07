@@ -1,18 +1,13 @@
-import html2text
-import htmllib, formatter, urllib, sys
+import html2text, urllib, sys,  chardet
 
 def wrapwrite(text): sys.stdout.write(text.encode('utf8'))
 
 baseurl = 'http://www.aktualne.cz/'
 if baseurl.startswith('http://') or baseurl.startswith('https://'):
-    j = urllib.urlopen(baseurl)
-    try:
-        from feedparser import _getCharacterEncoding as enc
-    except ImportError:
-        enc = lambda x, y: ('utf-8', 1)
+    j = urllib.urlopen(baseurl)    
     text = j.read()
-    encoding = enc(j.headers, text)[0]
-    if encoding == 'us-ascii': encoding = 'utf-8'
+    encoding = chardet.detect(text)['encoding']
+   
     data = text.decode(encoding)
 
 else:
