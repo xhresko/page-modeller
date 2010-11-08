@@ -1,17 +1,17 @@
-import html2text, urllib, sys,  chardet
-
+import urllib, sys, html2text_old, encutils
 def wrapwrite(text): sys.stdout.write(text.encode('utf8'))
 
-baseurl = 'http://www.aktualne.cz/'
+baseurl = 'http://blisty.cz/2010/11/5/art55351.html'
 if baseurl.startswith('http://') or baseurl.startswith('https://'):
     j = urllib.urlopen(baseurl)    
     text = j.read()
-    encoding = chardet.detect(text)['encoding']
-   
+    print (str(encutils.det_encoding(text)))
+    encoding = encutils.det_encoding(text)
+    
     data = text.decode(encoding)
 
 else:
-    encoding = 'utf8'    
+    encoding = 'utf8'
     
 
-wrapwrite(html2text.html2text(data, baseurl))
+wrapwrite(html2text_old.html2text(data, baseurl))
