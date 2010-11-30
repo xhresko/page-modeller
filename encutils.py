@@ -16,8 +16,15 @@ pat_utf8 = re.compile(b'[\xC2\xC3]') #194,195
 pat_cp1250 = re.compile(b'[\x8A\x8D\x8E\x9A\x9C-\x9F]') #138,141,142,154,156-159
 pat_iso8859_2 = re.compile(b'[\xA6\xA9\xAB\xAE\xB1\xB5-\xB7\xBB]') #166,169,171,174,177,181-183,187
 
+pat_encinfo = re.compile('charset=[^\"]+')
+
 def det_encoding(input_data):
-    if (re.search(pat_utf8, input_data)):
+ 
+    string = str(input_data)
+    m = re.search(pat_encinfo, string)
+    if (m!=None): 
+        return (m.group(0).replace("charset=","") + " z hlavicky") 
+    elif (re.search(pat_utf8, input_data)):
         return 'utf-8'    
     elif (re.search(pat_cp1250, input_data)):
         return 'cp1250'
