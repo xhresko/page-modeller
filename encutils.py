@@ -12,9 +12,9 @@ sample_utf = "http://www.root.cz"
 sample_cp1250 = "http://www.ihned.cz"
 sample_iso8859_2 = "http://www.aktualne.cz"
 
-pat_utf8 = re.compile(b'[\xC2\xC3]')
-pat_cp1250 = re.compile(b'[\x8A\x8D\x8E\x9A\x9C-\x9F]')
-pat_iso8859_2 = re.compile(b'[\xA6\xA9\xAB\xAE\xB1\xB5-\xB7\xBB]')
+pat_utf8 = re.compile(b'[\xC2\xC3]') #194,195
+pat_cp1250 = re.compile(b'[\x8A\x8D\x8E\x9A\x9C-\x9F]') #138,141,142,154,156-159
+pat_iso8859_2 = re.compile(b'[\xA6\xA9\xAB\xAE\xB1\xB5-\xB7\xBB]') #166,169,171,174,177,181-183,187
 
 def det_encoding(input_data):
     if (re.search(pat_utf8, input_data)):
@@ -26,9 +26,11 @@ def det_encoding(input_data):
     else :
         return "unknown"
 
-for arg in sys.argv: 
-    opener = urllib.request.FancyURLopener({})
-    f = opener.open(arg)
+
+if len(sys.argv) > 1 :
+    #for arg in sys.argv: 
+    opener = urllib.request.FancyURLopener()
+    f = opener.open(sys.argv[1])
     text = f.read()
     print(det_encoding(text))
 
