@@ -23,7 +23,7 @@ def det_encoding(input_data):
     string = str(input_data)
     m = re.search(pat_encinfo, string)
     if (m!=None): 
-        return (m.group(0).replace("charset=","") + " z hlavicky") 
+        return (m.group(0).replace("charset=","")) 
     elif (re.search(pat_utf8, input_data)):
         return 'utf-8'    
     elif (re.search(pat_cp1250, input_data)):
@@ -34,11 +34,11 @@ def det_encoding(input_data):
         return "unknown"
 
 
-if len(sys.argv) > 1 :
+'''if len(sys.argv) > 1 :
     #for arg in sys.argv: 
     opener = urllib.request.FancyURLopener()
     f = opener.open(sys.argv[1])
     text = f.read()
     print(det_encoding(text))
-
+'''
 
